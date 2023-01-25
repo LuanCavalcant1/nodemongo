@@ -1,8 +1,9 @@
 import express, { Request, Response } from "express";
 import { config } from "dotenv";
 import { GetUsersController } from "./controllers/get-users/get-users";
-import { MongoGetUsersRepository } from "./repositories/get-users/mongo/get/users";
+
 import { MongoClient } from "./database/mongo";
+import { MongoGetUsersRepository } from "./repositories/get-users/mongo-get-users";
 
 const main = async () => {
   config();
