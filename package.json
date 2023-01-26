@@ -10,8 +10,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/express": "types/express",
+    "@types/body-parser": "^1.19.2",
+    "@types/express": "^4.17.16",
     "@types/node": "^18.11.18",
+    "@types/validator": "types/validator",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
     "@typescript-eslint/parser": "^5.49.0",
     "dotenv": "^16.0.3",
@@ -27,6 +29,7 @@
     "eslint-config-prettier": "^8.6.0",
     "express": "^4.18.2",
     "mongodb": "^4.13.0",
-    "prettier": "^2.8.3"
+    "prettier": "^2.8.3",
+    "validator": "^13.7.0"
   }
 }
