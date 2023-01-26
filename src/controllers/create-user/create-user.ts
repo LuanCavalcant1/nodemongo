@@ -1,27 +1,21 @@
 // import validator from "validator";
 import { IUser } from "../../models/user";
-import { IHttpRequest, IHttpResponse } from "../protocols";
-import {
-  ICreateUserController,
-  ICreateUserParams,
-  ICreateUserRepository,
-} from "./protocols";
+import { badRequest, created, serverError } from "../helpers";
+import { IController, IHttpRequest, IHttpResponse } from "../protocols";
+import { ICreateUserParams, ICreateUserRepository } from "./protocols";
 
-export class CreateUserController implements ICreateUserController {
+export class CreateUserController implements IController {
   constructor(private readonly createUserRepository: ICreateUserRepository) {}
 
   async handle(
     httpRequest: IHttpRequest<ICreateUserParams>
-  ): Promise<IHttpResponse<IUser>> {
+  ): Promise<IHttpResponse<IUser | string>> {
     try {
       const requiredFields = ["firstName", "lastName", "email", "password"];
 
       for (const field of requiredFields) {
         if (!httpRequest?.body?.[field as keyof ICreateUserParams]?.length) {
-          return {
-            statusCode: 400,
-            body: `Field ${field} is required`,
-          };
+          return badRequest(`Field ${field} is required`);
         }
       }
       // verificar se o e-mail é valido
@@ -39,15 +33,9 @@ export class CreateUserController implements ICreateUserController {
         httpRequest.body!
       );
 
-      return {
-        statusCode: 201,
-        body: user,
-      };
+      return created<IUser>(user);
     } catch (error) {
-      return {
-        statusCode: 500,
-        body: "Something went wrong",
-      };
+      return serverError();
     }
   }
 }
